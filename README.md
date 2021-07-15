@@ -3,13 +3,15 @@
 ### Description
 This template deploys an Aviatrix managed TGW and creates a configurable number of security domains with a separate Firenet for each of them containing a configurable number of Egress FQDN gateways. The spoke security domains will be connected to their respective Firenet Egress domains to isolate the egress traffic. E.g., Prod spokes will egress via the Prod Firenet, Dev spokes will egress via the Dev firenet. FQDN tags will also be created for the configured security domains and the respective FQDN gateways will be attached to them.
 
+Test clients will be created in the spoke VPCs in different availability zones.
+
 ### Compatibility
 Terraform version | Controller version | Terraform provider version
 :--- | :--- | :---
 0.14 | 6.4d | 2.19.5
 
 ### Diagram
-<img src="img/tgw-firenet-multiple-egress.png">
+<img src="img/TGW-Firenet-Multiple-Egress.png">
 
 
 ### AWS Instances Created
@@ -27,7 +29,8 @@ Modify ```terraform.tfvars``` as needed for your configuration.
 - **account:** The Onboarded AWS account in the controller which will be used to deploy the resources in the template
 - **spokes:** A map of spoke VPCs and their respective CIDRS. The keys in the map **must** match the keys in the firenets map, as a security domain will be created for each of them and the spokes will be connected to their respective firenet egress security domain.
 - **firenets:** A map of transit firenet VPCs and their respective CIDRS. The template will deploy HA transits in each of these VPCs with a variable number of associated Egress FQDN gateways.
-- **egress_gw_per_az:** How many egress FQDN gateways you want to associate with each Transit gateway/hagw. This is basically a multiplier. E.g., if set to 2, the template will create and associate two FQDN gateway with both the primary and hagw transits (4 total per firenet VPC). 
+- **egress_gw_per_az:** How many egress FQDN gateways you want to associate with each Transit gateway/hagw. This is basically a multiplier. E.g., if set to 2, the template will create and associate two FQDN gateway with both the primary and hagw transits (4 total per firenet VPC).
+- **tgw_name:** Name of the Aviatrix managed TGW which will be created
 - **transit_gw_instance_size:** Size of the transit gateway instances in the firenet VPCs (default and minimum is c5.xlarge).
 - **egress_gw_instance_size:** Size of the Egress FQDN gateway instances in the firenet VPCs (defualt is t3.micro).
 - **testclient_instance_size:** Size of the test client instances which are deployed in the spoke VPCs (default is t3.micro).
