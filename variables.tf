@@ -65,7 +65,7 @@ variable "egress_gw_per_az" {
 }
 
 locals {
-	azs	   = ["a", "b"]
-	egress_gws = flatten([ for domain, subnet in var.firenets : [for az in local.azs : [ for i in range(var.egress_gw_per_az) : { "${domain}-egress-${i + 1}${az}" = domain } ] ] ])
-	test_clients = flatten([for domain, subnet in var.spokes : [for az in local.azs : { "${domain}-testclient-${az}" = domain } ] ])
+  azs          = ["a", "b"]
+  egress_gws   = flatten([for domain, subnet in var.firenets : [for az in local.azs : [for i in range(var.egress_gw_per_az) : { "${domain}-egress-${i + 1}${az}" = domain }]]])
+  test_clients = flatten([for domain, subnet in var.spokes : [for az in local.azs : { "${domain}-testclient-${az}" = domain }]])
 }

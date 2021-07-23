@@ -3,7 +3,12 @@
 ### Description
 This template deploys an Aviatrix managed TGW and creates a configurable number of security domains with a separate Firenet for each of them containing a configurable number of Egress FQDN gateways. The spoke security domains will be connected to their respective Firenet Egress domains to isolate the egress traffic. E.g., Prod spokes will egress via the Prod Firenet, Dev spokes will egress via the Dev firenet. FQDN tags will also be created for the configured security domains and the respective FQDN gateways will be attached to them.
 
-Test clients will be created in the spoke VPCs in different availability zones.
+Test clients will be created in the spoke VPCs in different availability zones. 
+
+Test client credentials:
+
+Username: ec2-user
+Password: Aviatrix123!
 
 ### Compatibility
 Terraform version | Controller version | Terraform provider version
